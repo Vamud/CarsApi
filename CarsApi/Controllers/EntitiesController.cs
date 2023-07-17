@@ -59,7 +59,9 @@ namespace CarsApi.Controllers
 				{
 					Name = i.Name,
 					Image = i.Value<IPublishedContent>("image")!.Url(),
+					BrandName = i.Ancestor()!.Name,
 					LaunchDate = i.Value<DateTime>("launchDate"),
+					Url = i.Url(),
 					Description = i.Value<string>("description")!,
 					Price = i.Value<decimal>("price")
 				})

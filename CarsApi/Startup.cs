@@ -57,6 +57,6 @@ namespace CarsApi
 			{
 				endpoints.MapControllers();
 			});
-		}
+        }
 	}
 }

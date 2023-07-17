@@ -46,33 +46,12 @@ namespace CarsApi.Controllers
 					BrandName = c.Ancestor()!.Name,
 					Image = c.Value<IPublishedContent>("image")!.Url(),
 					LaunchDate = c.Value<DateTime>("launchDate"),
+                    Url = c.Url(),
 					Description = c.Value<string>("description")!,
 					Price = c.Value<decimal>("price")
 				}).ToList();
                 cars.AddRange(models);
             }
-           /* var cars = rootNode.Children().Select(e => e.Children().Select(c =>
-                new CarModel
-                {
-                    Name = c.Name,
-                    BrandName = c.Ancestor()!.Name,
-                    Image = c.Value<IPublishedContent>("image")!.Url(),
-                    LaunchDate = c.Value<DateTime>("launchDate"),
-                    Description = c.Value<string>("description")!,
-                    Price = c.Value<decimal>("price")
-                }));*/
-            /*var entities = rootNode.Children().Select(i =>
-			{
-                i.Children().Select(i => new CarModel
-                {
-                    Name = i.Name,
-                    Image = i.Value<IPublishedContent>("image")!.Url(),
-                    LaunchDate = i.Value<DateTime>("launchDate"),
-                    Description = i.Value<string>("description")!,
-                    Price = i.Value<decimal>("price")
-                })
-
-			});*/
 
             if (brand != 0)
             {

@@ -1,0 +1,72 @@
+﻿@model CarsApi.Models.IndexViewModel
+
+<div class="container">
+    <form method="get">
+        <select class="form-select" aria-label="Default select example" name="brand" asp-items="Model.FilterViewModel.Brands"></select>
+
+        <input type="submit" value="Filter" />
+    </form>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Launch date</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var car in Model.CarModels)
+                {
+                    <tr>
+                        <td>@car.Name</td>
+                        <td>@car.LaunchDate</td>
+                        <td>@(car.Price)$</td>
+
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+<p>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+           asp-route-brand="@(Model.FilterViewModel.SelectedBrand)"
+           class="glyphicon glyphicon-chevron-left">
+            Previous
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+           asp-route-brand="@(Model.FilterViewModel.SelectedBrand)"
+           class="glyphicon glyphicon-chevron-right">
+            Next
+        </a>
+    }
+</p>
+
+@*<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>*@
+

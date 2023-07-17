@@ -1,4 +1,6 @@
-﻿using CarsApi.Models;
+﻿using Bogus;
+using CarsApi.Models;
+using CarsApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
@@ -15,11 +17,26 @@ namespace CarsApi.Controllers
 
 		private readonly IContentService _contentService;
 		private readonly IPublishedContentQuery _publishedContentQuery;
+		private readonly IFakeDataService _fakeDataService;
 
-		public EntitiesController(IContentService contentTypeService, IPublishedContentQuery publishedContentQuery)
+		public EntitiesController(IContentService contentTypeService, IPublishedContentQuery publishedContentQuery, IFakeDataService fakeDataService)
 		{
 			_contentService = contentTypeService;
 			_publishedContentQuery = publishedContentQuery;
+			_fakeDataService = fakeDataService;
+		}
+
+		[HttpPost("fake/{quantity}")]
+		public IActionResult CreateFakeData(int quantity)
+		{
+			var cars = _fakeDataService.CreateFakeEntities<CarModel>(quantity);
+
+			foreach (var car in cars)
+			{
+				CreateEntity(car);
+			}
+
+			return Ok(cars);
 		}
 
 		[HttpGet]
@@ -63,6 +80,7 @@ namespace CarsApi.Controllers
 			CarModel result = new CarModel
 			{
 				Name = entity.Name,
+				BrandName = entity.Ancestor()!.Name,
 				Image = entity.Value<IPublishedContent>("image")!.Url(),
 				LaunchDate = entity.Value<DateTime>("launchDate"),
 				Description = entity.Value<string>("description")!,

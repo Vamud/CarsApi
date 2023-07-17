@@ -1,3 +1,5 @@
+using CarsApi.Services;
+using CarsApi.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 
 namespace CarsApi
@@ -16,6 +18,8 @@ namespace CarsApi
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+
+			services.AddTransient<IFakeDataService, FakeDataService>();
 
 			services.AddUmbraco(_env, _config)
 				.AddBackOffice()

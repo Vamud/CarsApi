@@ -1,11 +1,9 @@
 ﻿using CarsApi.Models;
-using Lucene.Net.Analysis.Br;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
-using Umbraco.Cms.Infrastructure;
 using Umbraco.Cms.Web.Common.Controllers;
 
 namespace CarsApi.Controllers
@@ -37,6 +35,7 @@ namespace CarsApi.Controllers
             }).ToList();
 
             var cars = new List<CarModel>();
+
             foreach ( var item in nodes )
             {
                 var models = item.Children().Select(c =>
@@ -44,7 +43,7 @@ namespace CarsApi.Controllers
 				{
 					Name = c.Name,
 					BrandName = c.Ancestor()!.Name,
-					Image = c.Value<IPublishedContent>("image")!.Url(),
+					Image = c.Value<IPublishedContent>("image")?.Url(),
 					LaunchDate = c.Value<DateTime>("launchDate"),
                     Url = c.Url(),
 					Description = c.Value<string>("description")!,

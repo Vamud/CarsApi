@@ -1,5 +1,4 @@
-﻿using Bogus;
-using CarsApi.Models;
+﻿using CarsApi.Models;
 using CarsApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;

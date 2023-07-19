@@ -3,13 +3,18 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @using CarsApi.Models;
 @{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "Master.cshtml";
 
-    var imageUrl = Model.Value<IPublishedContent>("image")!.Url();
+    var media = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+    var defImgUrl = media?.Url();
+
+    var imageUrl = Model.Value<IPublishedContent>("image")?.Url() ?? defImgUrl;
+
     var description = Model.GetProperty("description");
     var text = description!.GetValue();
-    var launchDate = Model.Value<DateTime>("launchDate").ToShortDateString();
+    var launchDate = Model.Value<DateTime>("launchDate").Year;
     var price = Model.Value<decimal>("price");
+    var iconUrl = Model.Ancestor()!.Value<IPublishedContent>("icon")!.Url();
 }
 
 <div class="container">
@@ -20,11 +25,19 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">@Model.Name</h5>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <h5 class="card-title">@Model.Name</h5>
+                        </div>
+                        <div class="col-1">
+                            <img src=@iconUrl class="img-fluid rounded-start" alt="..." width="50">
+                        </div>
+                    </div>
                     <p class="card-text">@text</p>
-                    <p class="card-text"><small class="text-body-secondary">Launch date: @launchDate</small></p>
+                    <p class="card-text"><small class="text-body-secondary">Year: @launchDate</small></p>
                     <p class="card-text"><small class="text-body-secondary">Price: @price$</small></p>
                     <a href="/sar-showroom" class="btn btn-primary">Go back</a>
+                    <a href="#" class="btn btn-primary">Buy</a>
                 </div>
             </div>
         </div>

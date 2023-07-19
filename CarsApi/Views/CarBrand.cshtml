@@ -2,5 +2,37 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = null;
+    Layout = "Master.cshtml";
+
+    var media = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+    var defImgUrl = media?.Url();
+
+    var imageUrl = Model.Value<IPublishedContent>("icon")?.Url() ?? defImgUrl;
+
+    var description = Model.GetProperty("description");
+    var text = description!.GetValue();
+    var foundationDate = Model.Value<DateTime>("foundationDate").ToShortDateString();
+    var originCountry = Model.Value<string>("originCountry")!;
 }
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src=@imageUrl class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <h5 class="card-title">@Model.Name</h5>
+                    </div>
+                    <p class="card-text">@text</p>
+                    <p class="card-text">Origin country: @originCountry</p>
+                    <p class="card-text">Foundation date: @foundationDate</p>
+                    <a href="/brands" class="btn btn-primary">Go back</a>
+                    <a href="/sar-showroom?brand=@Model.Id" class="btn btn-primary">View models</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

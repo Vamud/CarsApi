@@ -1,0 +1,30 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using CarsApi.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BrandsViewModel>
+@{
+	Layout = "Master.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="row g-4">
+                @foreach (var brand in Model.Brands)
+                {
+                    <div class="col">
+                        <div class="card">
+                            <img src=@brand.Icon class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@brand.Name</h5>
+                                <p class="card-text">Origin country: @brand.OriginCountry</p>
+                                <p class="card-text">@brand.FoundationDate.ToShortDateString()</p>
+                                <a href="@brand.Url" class="btn btn-primary">View Details</a>
+                                <a href="/sar-showroom?brand=@brand.Id" class="btn btn-primary">View Models</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

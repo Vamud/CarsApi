@@ -1,0 +1,44 @@
+﻿@model CarsApi.Models.IndexViewModel
+
+@{
+    var pageModel = Model.PageViewModel;
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if (Model.PageViewModel.HasPreviousPage)
+                {
+                    var queryString = $"?page={Model.PageViewModel.PageNumber - 1}&brand={Model.FilterViewModel.SelectedBrand}";
+
+                    <li class="page-item">
+                        <a class="page-link" href=@queryString aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                }
+
+                @for (int page = 1; page <= pageModel.TotalPages; page++)
+                {
+                    var queryString = $"?page={page}&brand={Model.FilterViewModel.SelectedBrand}";
+
+                    <li class="page-item"><a class="page-link" href="@queryString">@(page)</a></li>
+                }
+
+                @if (Model.PageViewModel.HasNextPage)
+                {
+                    var queryString = $"?page={Model.PageViewModel.PageNumber + 1}&brand={Model.FilterViewModel.SelectedBrand}";
+
+                    <li class="page-item">
+                        <a class="page-link" href=@queryString aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

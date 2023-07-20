@@ -57,7 +57,7 @@ namespace CarsApi.Controllers
 				Models = i.Children().Select(i => new CarModel
 				{
 					Name = i.Name,
-					Image = i.Value<IPublishedContent>("image")!.Url(),
+					Image = i.Value<IPublishedContent>("image")!,
 					BrandName = i.Ancestor()!.Name,
 					LaunchDate = i.Value<DateTime>("launchDate"),
 					Url = i.Url(),
@@ -82,7 +82,7 @@ namespace CarsApi.Controllers
 			{
 				Name = entity.Name,
 				BrandName = entity.Ancestor()!.Name,
-				Image = entity.Value<IPublishedContent>("image")!.Url(),
+				Image = entity.Value<IPublishedContent>("image")!,
 				LaunchDate = entity.Value<DateTime>("launchDate"),
 				Description = entity.Value<string>("description")!,
 				Price = entity.Value<decimal>("price")

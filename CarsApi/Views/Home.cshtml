@@ -6,13 +6,14 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "Master.cshtml";
-    var text = Model.Value("about");
+    var about = Model.GetProperty("about");
+    var aboutText = about!.GetValue();
     var imageUrl = Model.Value<IPublishedContent>("image")!.Url();
-    var title = Model.Value<string>("title");
 }
+
 <div class="container">
     <div class="row text-center p-4">
-        <h3>@title</h3>
+        <h3>@(Model.Value<string>("title"))</h3>
     </div>
     <div class="row">
         <img src=@imageUrl class="img-fluid rounded-start" alt="...">
@@ -21,36 +22,6 @@
         <a href="/sar-showroom" class="btn btn-primary">View Cars</a>
     </div>
     <div class="row p-4">
-        @text
+        @aboutText
     </div>
 </div>
-<footer class="text-center text-lg-start bg-light text-muted">
-    <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <div class="row mt-3">
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>CarSale
-                    </h6>
-                    <p>
-                        @(Model.Value<string>("footerTitle"))
-                    </p>
-                </div>
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    <p><i class="fas fa-home me-3"></i>@(Model.Value<string>("address"))</p>
-                    <p>
-                        <i class="fas fa-envelope me-3"></i>
-                        @(Model.Value<string>("email"))
-                    </p>
-                    <p><i class="fas fa-phone me-3"></i>@(Model.Value<string>("phone"))</p>
-                    <p><i class="fas fa-print me-3"></i>@(Model.Value<string>("phone"))</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold" href="/">CarSale.com</a>
-    </div>
-</footer>

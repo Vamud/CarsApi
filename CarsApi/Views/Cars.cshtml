@@ -13,76 +13,57 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <p>Search bar</p>
-            <form method="get">
+        <div class="col-2 p-4">
+            <h5>Search bar</h5>
+            <form method="get" class="pt-4">
                 <div class="row">
                     <select class="form-select" name="brand" asp-items="Model.FilterViewModel.Brands"></select>
                 </div>
                 <label>Price</label>
                 <div class="row">
-                    <select class="form-select form-select-sm" name="minPrice">
-                        <option selected>Min</option>
-                        <option value="5000">5000$</option>
-                        <option value="20000">20000$</option>
-                        <option value="50000">50000$</option>
-                        <option value="70000">70000$</option>
-                        <option value="90000">90000$</option>
-                        <option value="100000">100000$</option>
-                    </select>
-                    <select class="form-select form-select-sm" name="maxPrice">
-                        <option selected>Max</option>
-                        <option value="1000">1000$</option>
-                        <option value="20000">20000$</option>
-                        <option value="50000">50000$</option>
-                        <option value="70000">70000$</option>
-                        <option value="90000">90000$</option>
-                        <option value="100000">100000$</option>
-                    </select>
+                    <select class="form-select" name="minPrice" asp-items="Model.FilterViewModel.MinPrices"></select>
+                    <select class="form-select" name="maxPrice" asp-items="Model.FilterViewModel.MaxPrices"></select>
                 </div>
                 <label>Model year</label>
                 <div class="row">
-                    <select class="form-select form-select-sm" name="minYear">
-                        <option selected>Min</option>
-                        <option value="1990">1990</option>
-                        <option value="2000">2000</option>
-                        <option value="2010">2010</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                    </select>
-                    <select class="form-select form-select-sm" name="maxYear">
-                        <option selected>Max</option>
-                        <option value="2000">2000</option>
-                        <option value="2010">2010</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                    </select>
+                    <select class="form-select" name="minYear" asp-items="Model.FilterViewModel.MinYears"></select>
+                    <select class="form-select" name="maxYear" asp-items="Model.FilterViewModel.MaxYears"></select>
                 </div>
                 <input type="submit" value="Filter" />
             </form>
         </div>
         <div class="col-10">
-            @await Html.PartialAsync("Pagination", indexModel)
+            @if (indexModel.PageViewModel.TotalPages > 1)
+            {
+                @await Html.PartialAsync("Pagination", indexModel);
+            }
+            @if (!Model.CarModels.Any())
+            {
+                <div class="container text-center">
+                    <p>No items matching your search criteria!</p>
+                </div>
+            }
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 @foreach (var car in Model.CarModels)
                 {
                     <div class="col">
                         <div class="card">
-                            <img src=@car.Image class="card-img-top" alt="...">
+                            <img src="@Url.GetCropUrl(car.Image, height: 250, width: 400)" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@car.Name</h5>
                                 <p class="card-text">@car.LaunchDate.Year</p>
                                 <p class="card-text"><small class="text-body-secondary">Price: @(car.Price)$</small></p>
                                 <a href="@car.Url" class="btn btn-primary">View Details</a>
+                                <a href="#" class="btn btn-primary">Buy Now</a>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-            @await Html.PartialAsync("Pagination", indexModel)
+            @if(indexModel.PageViewModel.TotalPages > 1)
+            {
+                @await Html.PartialAsync("Pagination", indexModel);
+            }
         </div>
     </div>
 </div>

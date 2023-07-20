@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common;
 using Umbraco.Cms.Web.Common.Controllers;
@@ -32,10 +31,7 @@ namespace CarsApi.Controllers
         {
             
             int pageSize = 6;
-
-            var media = _umbracoHelper.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
-            var defImgUrl = media?.Url();
-
+            var defImg = _umbracoHelper.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
             var rootNode = _publishedContentQuery.Content(1064);
             var nodes = rootNode!.Children();
 
@@ -43,6 +39,9 @@ namespace CarsApi.Controllers
             {
                 Id = b.Id, Name = b.Name
             }).ToList();
+
+            var prices = new List<PriceFilterModel>();
+            var years = new List<YearFilterModel>();
 
             var cars = new List<CarModel>();
 
@@ -53,7 +52,7 @@ namespace CarsApi.Controllers
 				{
 					Name = c.Name,
 					BrandName = c.Ancestor()!.Name,
-					Image = c.Value<IPublishedContent>("image")?.Url() ?? defImgUrl,
+					Image = c.Value<IPublishedContent>("image") ?? defImg,
 					LaunchDate = c.Value<DateTime>("launchDate"),
                     Url = c.Url(),
 					Description = c.Value<string>("description")!,
@@ -61,6 +60,9 @@ namespace CarsApi.Controllers
 				}).ToList();
                 cars.AddRange(models);
             }
+
+            prices = GetPricesByCarModels(cars);
+            years = GetYearsByCarModels(cars);
 
             if (brand != 0)
             {
@@ -94,10 +96,72 @@ namespace CarsApi.Controllers
             IndexViewModel viewModel = new IndexViewModel(
                 items,
                 new PageViewModel(count, page, pageSize),
-                new FilterViewModel(brands, brand, maxPrice, minPrice, minYear, maxYear)
+                new FilterViewModel(brands, brand, prices, minPrice, maxPrice, years, minYear, maxYear)
                 );
 
             return View("Cars", viewModel);
+        }
+
+        private List<PriceFilterModel> GetPricesByCarModels(List<CarModel> cars)
+        {
+            var minPrice = cars.Select(c => (int)c.Price).Min();
+            var maxPrice = cars.Select(c => (int)c.Price).Max();
+
+            var prices = new List<PriceFilterModel>
+            {
+                new PriceFilterModel
+                {
+                    MinPrice = 0,
+                    MaxPrice = 200000,
+                    TextMinPrice = "Min",
+                    TextMaxPrice = "Max"
+                }
+            };
+
+            while (minPrice < maxPrice)
+            {
+                minPrice += 10000;
+                prices.Add(new PriceFilterModel
+                {
+                    MinPrice = minPrice,
+                    MaxPrice = minPrice,
+                    TextMinPrice = minPrice.ToString(),
+                    TextMaxPrice = minPrice.ToString(),
+                });
+            }
+
+            return prices;
+        }
+
+        private List<YearFilterModel> GetYearsByCarModels(List<CarModel> cars)
+        {
+            var minYear = cars.Select(c => c.LaunchDate.Year).Min();
+            var maxYear = cars.Select(c => c.LaunchDate.Year).Max();
+
+            var years = new List<YearFilterModel>
+            {
+                new YearFilterModel
+                {
+                    MinYear = 0,
+                    MaxYear = 2023,
+                    MinYearText = "Min",
+                    MaxYearText = "Max"
+                }
+            };
+
+            while (minYear < maxYear)
+            {
+                minYear += 3;
+                years.Add(new YearFilterModel
+                {
+                    MinYear = minYear,
+                    MaxYear = minYear,
+                    MinYearText = minYear.ToString(),
+                    MaxYearText = minYear.ToString()
+                });
+            }
+
+            return years;
         }
     }
 }

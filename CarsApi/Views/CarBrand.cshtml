@@ -4,11 +4,8 @@
 @{
     Layout = "Master.cshtml";
 
-    var media = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
-    var defImgUrl = media?.Url();
-
-    var imageUrl = Model.Value<IPublishedContent>("icon")?.Url() ?? defImgUrl;
-
+    var defImg = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+    var image = Model.Value<IPublishedContent>("icon") ?? defImg;
     var description = Model.GetProperty("description");
     var text = description!.GetValue();
     var foundationDate = Model.Value<DateTime>("foundationDate").ToShortDateString();
@@ -19,7 +16,7 @@
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src=@imageUrl class="img-fluid rounded-start" alt="...">
+                <img src=@Url.GetCropUrl(image, height: 400, width: 400) class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body">

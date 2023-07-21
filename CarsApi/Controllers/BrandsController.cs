@@ -11,25 +11,23 @@ namespace CarsApi.Controllers
 {
     public class BrandsController : RenderController
     {
-        private readonly IPublishedContentQuery _publishedContentQuery;
         private readonly UmbracoHelper _umbracoHelper;
         public BrandsController(ILogger<RenderController> logger,
             ICompositeViewEngine compositeViewEngine,
             IUmbracoContextAccessor umbracoContextAccessor,
-            IPublishedContentQuery publishedContentQuery,
             UmbracoHelper umbracoHelper)
             : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
-            _publishedContentQuery = publishedContentQuery;
             _umbracoHelper = umbracoHelper;
         }
 
         [HttpGet]
         public override IActionResult Index()
         {
-            var rootNode = _publishedContentQuery.Content(1064);
+            var rootNode = _umbracoHelper.ContentSingleAtXPath("//cars");
             var nodes = rootNode!.Children();
-            var defImg = _umbracoHelper.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+
+            var defImg = _umbracoHelper.ContentSingleAtXPath("//settings")!.Value<IPublishedContent>("defaultImage");
 
             var brands = nodes.Select(b => new BrandModel
             {

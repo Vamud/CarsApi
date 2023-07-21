@@ -30,12 +30,13 @@
                     <select class="form-select" name="maxYear" asp-items="Model.FilterViewModel.MaxYears"></select>
                 </div>
                 <input type="submit" value="Filter" />
+                <input type="reset" value="Reset" />
             </form>
         </div>
         <div class="col-10">
             @if (indexModel.PageViewModel.TotalPages > 1)
             {
-                @await Html.PartialAsync("Pagination", indexModel);
+                @await Html.PartialAsync("_Pagination", indexModel);
             }
             @if (!Model.CarModels.Any())
             {
@@ -48,7 +49,7 @@
                 {
                     <div class="col">
                         <div class="card">
-                            <img src="@Url.GetCropUrl(car.Image, height: 250, width: 400)" class="card-img-top" alt="...">
+                            <img src="@Url.GetCropUrl(car.Image, height: 250, width: 400)" class="card-img-top" alt="Car image">
                             <div class="card-body">
                                 <h5 class="card-title">@car.Name</h5>
                                 <p class="card-text">@car.LaunchDate.Year</p>
@@ -62,7 +63,7 @@
             </div>
             @if(indexModel.PageViewModel.TotalPages > 1)
             {
-                @await Html.PartialAsync("Pagination", indexModel);
+                @await Html.PartialAsync("_Pagination", indexModel);
             }
         </div>
     </div>

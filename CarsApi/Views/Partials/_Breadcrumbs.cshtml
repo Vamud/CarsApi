@@ -1,0 +1,29 @@
+﻿@*@{
+    var currentPage = 
+}
+
+
+@if (Model != null)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var ancestor in Model.Ancestors().Reverse())
+            {
+                <li class="breadcrumb-item">
+                    <a href="@ancestor.Url()">@ancestor.Name</a>
+                </li>
+            }
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+}*@
+
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </ol>
+</nav>

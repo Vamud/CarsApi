@@ -58,7 +58,7 @@ namespace CarsApi.Controllers
 				{
 					Name = i.Name,
 					Image = i.Value<IPublishedContent>("image")!,
-					BrandName = i.Ancestor()!.Name,
+					BrandId = i.Ancestor()!.Id,
 					LaunchDate = i.Value<DateTime>("launchDate"),
 					Url = i.Url(),
 					Description = i.Value<string>("description")!,
@@ -81,7 +81,7 @@ namespace CarsApi.Controllers
 			CarModel result = new CarModel
 			{
 				Name = entity.Name,
-				BrandName = entity.Ancestor()!.Name,
+				BrandId = entity.Ancestor()!.Id,
 				Image = entity.Value<IPublishedContent>("image")!,
 				LaunchDate = entity.Value<DateTime>("launchDate"),
 				Description = entity.Value<string>("description")!,

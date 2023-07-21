@@ -4,6 +4,7 @@
 @using CarsApi.Controllers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
 @{
     Layout = "Master.cshtml";
     var about = Model.GetProperty("about");
@@ -16,7 +17,7 @@
         <h3>@(Model.Value<string>("title"))</h3>
     </div>
     <div class="row">
-        <img src=@imageUrl class="img-fluid rounded-start" alt="...">
+        <img src=@imageUrl class="img-fluid rounded-start" alt="Photo of a car sales lot">
     </div>
     <div class="row-4 text-center m-4">
         <a href="/sar-showroom" class="btn btn-primary">View Cars</a>

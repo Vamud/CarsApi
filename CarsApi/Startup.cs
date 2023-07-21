@@ -20,6 +20,7 @@ namespace CarsApi
 			services.AddControllers();
 
 			services.AddTransient<IFakeDataService, FakeDataService>();
+			services.AddTransient<IFilterService, FilterSevice>();
 
 			services.AddUmbraco(_env, _config)
 				.AddBackOffice()

@@ -5,20 +5,20 @@
 @{
     Layout = "Master.cshtml";
 
-    var defImg = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+    var defImg = Umbraco.ContentSingleAtXPath("//settings")!.Value<IPublishedContent>("defaultImage");
     var image = Model.Value<IPublishedContent>("image") ?? defImg;
     var description = Model.GetProperty("description");
     var text = description!.GetValue();
     var launchDate = Model.Value<DateTime>("launchDate").Year;
     var price = Model.Value<decimal>("price");
-    var iconUrl = Model.Ancestor()!.Value<IPublishedContent>("icon")!.Url();
+    var icon = Model.Ancestor()!.Value<IPublishedContent>("icon")! ?? defImg;
 }
 
 <div class="container">
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4 p-4">
-                <img src=@Url.GetCropUrl(image, height: 300, width: 500) class="img-fluid rounded-start" alt="...">
+                <img src=@Url.GetCropUrl(image, height: 300, width: 500) class="img-fluid rounded-start" alt="Car image">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -27,7 +27,7 @@
                             <h5 class="card-title">@Model.Name</h5>
                         </div>
                         <div class="col-1">
-                            <img src=@iconUrl class="img-fluid rounded-start" alt="..." width="50">
+                            <img src=@Url.GetCropUrl(icon, height: 50, width: 50)" class="img-fluid rounded-start" alt="Car brand logo">
                         </div>
                     </div>
                     <p class="card-text">@text</p>

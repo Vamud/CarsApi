@@ -1,5 +1,4 @@
-﻿ 
-@using CarsApi.Models;
+﻿@using CarsApi.Models;
 @using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IndexViewModel>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
@@ -14,23 +13,22 @@
 <div class="container">
     <div class="row">
         <div class="col-2 p-4">
-            <h5>Search bar</h5>
+            <h5>@Umbraco.GetDictionaryValue("Search bar")</h5>
             <form method="get" class="pt-4">
                 <div class="row">
                     <select class="form-select" name="brand" asp-items="Model.FilterViewModel.Brands"></select>
                 </div>
-                <label>Price</label>
+                <label>@Umbraco.GetDictionaryValue("Price")</label>
                 <div class="row">
                     <select class="form-select" name="minPrice" asp-items="Model.FilterViewModel.MinPrices"></select>
                     <select class="form-select" name="maxPrice" asp-items="Model.FilterViewModel.MaxPrices"></select>
                 </div>
-                <label>Model year</label>
+                <label>@Umbraco.GetDictionaryValue("Model year")</label>
                 <div class="row">
                     <select class="form-select" name="minYear" asp-items="Model.FilterViewModel.MinYears"></select>
                     <select class="form-select" name="maxYear" asp-items="Model.FilterViewModel.MaxYears"></select>
                 </div>
-                <input type="submit" value="Filter" />
-                <input type="reset" value="Reset" />
+                <input type="submit" value="@Umbraco.GetDictionaryValue("Filter")" />
             </form>
         </div>
         <div class="col-10">
@@ -53,9 +51,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">@car.Name</h5>
                                 <p class="card-text">@car.LaunchDate.Year</p>
-                                <p class="card-text"><small class="text-body-secondary">Price: @(car.Price)$</small></p>
-                                <a href="@car.Url" class="btn btn-primary">View Details</a>
-                                <a href="#" class="btn btn-primary">Buy Now</a>
+                                <p class="card-text"><small class="text-body-secondary">@Umbraco.GetDictionaryValue("Price"): @(car.Price)$</small></p>
+                                <a href="@car.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
+                                <a href="#" class="btn btn-primary">@Umbraco.GetDictionaryValue("Buy now")</a>
                             </div>
                         </div>
                     </div>

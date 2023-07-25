@@ -4,7 +4,7 @@
 @{
     Layout = "Master.cshtml";
 
-    var defImg = Umbraco.Media(Guid.Parse("2ce6128a-c2b9-490c-8507-c167d564ad3f"));
+    var defImg = Umbraco.ContentSingleAtXPath("//settings")!.Value<IPublishedContent>("defaultImage");
     var image = Model.Value<IPublishedContent>("icon") ?? defImg;
     var description = Model.GetProperty("description");
     var text = description!.GetValue();
@@ -24,10 +24,10 @@
                         <h5 class="card-title">@Model.Name</h5>
                     </div>
                     <p class="card-text">@text</p>
-                    <p class="card-text">Origin country: @originCountry</p>
-                    <p class="card-text">Foundation date: @foundationDate</p>
-                    <a href="/brands" class="btn btn-primary">Go back</a>
-                    <a href="/sar-showroom?brand=@Model.Id" class="btn btn-primary">View models</a>
+                    <p class="card-text">@Umbraco.GetDictionaryValue("Origin country"): @originCountry</p>
+                    <p class="card-text">@Umbraco.GetDictionaryValue("Foundation date"): @foundationDate</p>
+                    <a href="@Umbraco.ContentSingleAtXPath("//brands")!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("Go back")</a>
+                    <a href="/sar-showroom?brand=@Model.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
                 </div>
             </div>
         </div>

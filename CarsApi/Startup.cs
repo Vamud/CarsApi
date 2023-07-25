@@ -1,6 +1,7 @@
 using CarsApi.Services;
 using CarsApi.Services.Interfaces;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace CarsApi
 {
@@ -58,6 +59,7 @@ namespace CarsApi
 			{
 				endpoints.MapControllers();
 			});
+
         }
 	}
 }

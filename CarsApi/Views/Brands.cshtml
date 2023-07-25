@@ -16,10 +16,10 @@
                             <img src=@Url.GetCropUrl(brand.Icon, height:400, width:400) class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@brand.Name</h5>
-                                <p class="card-text">Origin country: @brand.OriginCountry</p>
+                                <p class="card-text">@Umbraco.GetDictionaryValue("Origin country"): @brand.OriginCountry</p>
                                 <p class="card-text">@brand.FoundationDate.ToShortDateString()</p>
-                                <a href="@brand.Url" class="btn btn-primary">View Details</a>
-                                <a href="/sar-showroom?brand=@brand.Id" class="btn btn-primary">View Models</a>
+                                <a href="@brand.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
+                                <a href="/sar-showroom?brand=@brand.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
                             </div>
                         </div>
                     </div>

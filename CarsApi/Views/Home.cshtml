@@ -20,7 +20,7 @@
         <img src=@imageUrl class="img-fluid rounded-start" alt="Photo of a car sales lot">
     </div>
     <div class="row-4 text-center m-4">
-        <a href="/sar-showroom" class="btn btn-primary">View Cars</a>
+        <a href="@Umbraco.ContentSingleAtXPath("//cars")!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("View cars")</a>
     </div>
     <div class="row p-4">
         @aboutText

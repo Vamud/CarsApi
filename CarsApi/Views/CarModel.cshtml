@@ -31,10 +31,10 @@
                         </div>
                     </div>
                     <p class="card-text">@text</p>
-                    <p class="card-text"><small class="text-body-secondary">Year: @launchDate</small></p>
-                    <p class="card-text"><small class="text-body-secondary">Price: @price$</small></p>
-                    <a href="/sar-showroom" class="btn btn-primary">Go back</a>
-                    <a href="#" class="btn btn-primary">Buy</a>
+                    <p class="card-text"><small class="text-body-secondary">@Umbraco.GetDictionaryValue("Year"): @launchDate</small></p>
+                    <p class="card-text"><small class="text-body-secondary">@Umbraco.GetDictionaryValue("Price"): @price$</small></p>
+                    <a href="@Model.Ancestor()!.Ancestor()!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("Go back")</a>
+                    <a href="#" class="btn btn-primary">@Umbraco.GetDictionaryValue("Buy")</a>
                 </div>
             </div>
         </div>

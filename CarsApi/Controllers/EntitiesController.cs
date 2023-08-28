@@ -1,11 +1,13 @@
-﻿using Bogus;
-using CarsApi.Models;
+﻿using CarsApi.Models;
+using CarsApi.Models.Request;
+using CarsApi.Services;
 using CarsApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Web.Common;
 using Umbraco.Cms.Web.Common.Controllers;
 
 namespace CarsApi.Controllers
@@ -19,12 +21,14 @@ namespace CarsApi.Controllers
 		private readonly IPublishedContentQuery _publishedContentQuery;
 		private readonly IFakeDataService _fakeDataService;
 
-		public EntitiesController(IContentService contentTypeService, IPublishedContentQuery publishedContentQuery, IFakeDataService fakeDataService)
+        public EntitiesController(IContentService contentTypeService,
+			IPublishedContentQuery publishedContentQuery,
+			IFakeDataService fakeDataService)
 		{
 			_contentService = contentTypeService;
 			_publishedContentQuery = publishedContentQuery;
 			_fakeDataService = fakeDataService;
-		}
+        }
 
 		[HttpPost("fake/{quantity}")]
 		public IActionResult CreateFakeData(int quantity)
@@ -58,8 +62,8 @@ namespace CarsApi.Controllers
 				Models = i.Children().Select(i => new CarModel
 				{
 					Name = i.Name,
-					Image = i.Value<IPublishedContent>("image")!.Url(),
-					BrandName = i.Ancestor()!.Name,
+					Image = i.Value<IPublishedContent>("image")!,
+					BrandId = i.Ancestor()!.Id,
 					LaunchDate = i.Value<DateTime>("launchDate"),
 					Url = i.Url(),
 					Description = i.Value<string>("description")!,
@@ -82,8 +86,8 @@ namespace CarsApi.Controllers
 			CarModel result = new CarModel
 			{
 				Name = entity.Name,
-				BrandName = entity.Ancestor()!.Name,
-				Image = entity.Value<IPublishedContent>("image")!.Url(),
+				BrandId = entity.Ancestor()!.Id,
+				Image = entity.Value<IPublishedContent>("image")!,
 				LaunchDate = entity.Value<DateTime>("launchDate"),
 				Description = entity.Value<string>("description")!,
 				Price = entity.Value<decimal>("price")
@@ -92,7 +96,7 @@ namespace CarsApi.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost]
+        [HttpPost]
 		public IActionResult CreateEntity(CarModel model)
 		{
 			var parentId = Guid.Parse("4533f42c-b5ef-4451-8084-ac130b209b1e");

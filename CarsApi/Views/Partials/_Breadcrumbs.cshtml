@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var selection = Model.Ancestors().ToList();
+
+    if (selection.Any())
+    {
+        var items = selection.OrderBy(x => x.Level);
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                @foreach(var item in items)
+                {
+                    var itemName = item.Value("pageTitle", fallback: Fallback.ToDefaultValue, defaultValue: item.Name);
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @if (item.IsDocumentType("home"))
+                        {
+                            <a href="@Model.Ancestor()!.Url()" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                        else if (item.IsDocumentType("cars"))
+                        {
+                            var linkTo = item.Url();
+
+                            <a href="@linkTo" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                        else if (item.IsDocumentType("carModel"))
+                        {
+                            var linkTo = item.Url();
+
+                            <a href="@linkTo" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                        else if (item.IsDocumentType("brands"))
+                        {
+                            var linkTo = item.Url();
+
+                            <a href="@linkTo" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                        else if (item.IsDocumentType("carBrand"))
+                        {
+                            var linkTo = item.Url();
+
+                            <a href="@linkTo" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                    </li>
+                }
+                <li class="breadcrumb-item active disabled" aria-current="true">
+                    <span itemprop="title">@Model.Value("titlePage", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
+                </li>
+            </ol>
+        </nav>
+    }
+}

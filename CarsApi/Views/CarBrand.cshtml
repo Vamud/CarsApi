@@ -2,5 +2,34 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = null;
+    Layout = "Master.cshtml";
+
+    var defImg = Umbraco.ContentSingleAtXPath("//settings")!.Value<IPublishedContent>("defaultImage");
+    var image = Model.Value<IPublishedContent>("icon") ?? defImg;
+    var description = Model.GetProperty("description");
+    var text = description!.GetValue();
+    var foundationDate = Model.Value<DateTime>("foundationDate").ToShortDateString();
+    var originCountry = Model.Value<string>("originCountry")!;
 }
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src=@Url.GetCropUrl(image, height: 400, width: 400) class="img-fluid rounded-start" alt="Car brand logo">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <h5 class="card-title">@Model.Name</h5>
+                    </div>
+                    <p class="card-text">@text</p>
+                    <p class="card-text">@Umbraco.GetDictionaryValue("Origin country"): @originCountry</p>
+                    <p class="card-text">@Umbraco.GetDictionaryValue("Foundation date"): @foundationDate</p>
+                    <a href="@Umbraco.ContentSingleAtXPath("//brands")!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("Go back")</a>
+                    <a href="@Model.Ancestor()!.Url()?brand=@Model.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

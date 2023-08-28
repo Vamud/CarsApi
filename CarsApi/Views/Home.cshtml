@@ -4,7 +4,25 @@
 @using CarsApi.Controllers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
 @{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "Master.cshtml";
+    var about = Model.GetProperty("about");
+    var aboutText = about!.GetValue();
+    var imageUrl = Model.Value<IPublishedContent>("image")!.Url();
 }
 
+<div class="container">
+    <div class="row text-center p-4">
+        <h3>@(Model.Value<string>("title"))</h3>
+    </div>
+    <div class="row">
+        <img src=@imageUrl class="img-fluid rounded-start" alt="Photo of a car sales lot">
+    </div>
+    <div class="row-4 text-center m-4">
+        <a href="@Umbraco.ContentSingleAtXPath("//cars")!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("View cars")</a>
+    </div>
+    <div class="row p-4">
+        @aboutText
+    </div>
+</div>

@@ -46,7 +46,7 @@ namespace CarsApi.Controllers
                 Desctiption = b.Value<string>("description")!
             }).ToList();
 
-            var viewModel = new BrandsViewModel(CurrentPage, new PublishedValueFallback(_serviceContext, _variationContextAccessor))
+            var viewModel = new BrandsViewModel(CurrentPage!, new PublishedValueFallback(_serviceContext, _variationContextAccessor))
             {
                 Brands = brands
             };

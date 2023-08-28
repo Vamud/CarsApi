@@ -8,43 +8,43 @@
     var maxPrice = Model.FilterViewModel.SelectedMaxPrice;
     var minYear = Model.FilterViewModel.SelectedMinYear;
     var maxYear = Model.FilterViewModel.SelectedMaxYear;
-}
 
-<div class="row justify-content-md-center pt-4">
-    <div class="col-md-auto">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                @if (Model.PageViewModel.HasPreviousPage)
-                {
-                    var queryString = $"?page={Model.PageViewModel.PageNumber - 1}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
+    <div class="row justify-content-md-center pt-4">
+        <div class="col-md-auto">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @if (Model.PageViewModel.HasPreviousPage)
+                    {
+                        var queryString = $"?page={Model.PageViewModel.PageNumber - 1}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
 
-                    <li class="page-item">
-                        <a class="page-link" href=@queryString aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">@UmbracoHelper.GetDictionaryValue("Previous")</span>
-                        </a>
-                    </li>
-                }
+                        <li class="page-item">
+                            <a class="page-link" href=@queryString aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">@UmbracoHelper.GetDictionaryValue("Previous")</span>
+                            </a>
+                        </li>
+                    }
 
-                @for (int page = 1; page <= pageModel.TotalPages; page++)
-                {
-                    var queryString = $"?page={page}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
+                    @for (int page = 1; page <= pageModel.TotalPages; page++)
+                    {
+                        var queryString = $"?page={page}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
 
-                    <li class="page-item"><a class="page-link" href="@queryString">@(page)</a></li>
-                }
+                        <li class="page-item"><a class="page-link" href="@queryString">@(page)</a></li>
+                    }
 
-                @if (Model.PageViewModel.HasNextPage)
-                {
-                    var queryString = $"?page={Model.PageViewModel.PageNumber + 1}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
+                    @if (Model.PageViewModel.HasNextPage)
+                    {
+                        var queryString = $"?page={Model.PageViewModel.PageNumber + 1}&brand={brand}&minPrice={minPrice}&maxPrice={maxPrice}&minYear={minYear}&maxYear={maxYear}";
 
-                    <li class="page-item">
-                        <a class="page-link" href=@queryString aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">@UmbracoHelper.GetDictionaryValue("Next")</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </nav>
+                        <li class="page-item">
+                            <a class="page-link" href=@queryString aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">@UmbracoHelper.GetDictionaryValue("Next")</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
+}

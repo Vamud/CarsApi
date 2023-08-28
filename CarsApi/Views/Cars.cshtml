@@ -12,9 +12,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2 p-4">
+        <div class="col-sm-12 col-md-12 col-lg-2 p-4">
             <h5>@Umbraco.GetDictionaryValue("Search bar")</h5>
             <form method="get" class="pt-4">
+                <label>@Umbraco.GetDictionaryValue("Brands")</label>
                 <div class="row">
                     <select class="form-select" name="brand" asp-items="Model.FilterViewModel.Brands"></select>
                 </div>
@@ -31,7 +32,7 @@
                 <input type="submit" value="@Umbraco.GetDictionaryValue("Filter")" />
             </form>
         </div>
-        <div class="col-10">
+        <div class="col-sm-12 col-md-12 col-lg-10">
             @if (indexModel.PageViewModel.TotalPages > 1)
             {
                 @await Html.PartialAsync("_Pagination", indexModel);
@@ -45,15 +46,21 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 @foreach (var car in Model.CarModels)
                 {
-                    <div class="col">
+                    <div class="col-md-6 col-lg-6 col-xl-4">
                         <div class="card">
                             <img src="@Url.GetCropUrl(car.Image, height: 250, width: 400)" class="card-img-top" alt="Car image">
                             <div class="card-body">
                                 <h5 class="card-title">@car.Name</h5>
                                 <p class="card-text">@car.LaunchDate.Year</p>
                                 <p class="card-text"><small class="text-body-secondary">@Umbraco.GetDictionaryValue("Price"): @(car.Price)$</small></p>
-                                <a href="@car.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
-                                <a href="#" class="btn btn-primary">@Umbraco.GetDictionaryValue("Buy now")</a>
+                                <div class="row">
+                                    <div class="col p-2">
+                                        <a href="@car.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
+                                    </div>
+                                    <div class="col p-2">
+                                        <a href="#" class="btn btn-primary">@Umbraco.GetDictionaryValue("Buy now")</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

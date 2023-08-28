@@ -1,10 +1,13 @@
 ﻿using CarsApi.Models;
+using CarsApi.Models.Request;
+using CarsApi.Services;
 using CarsApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Web.Common;
 using Umbraco.Cms.Web.Common.Controllers;
 
 namespace CarsApi.Controllers
@@ -18,12 +21,14 @@ namespace CarsApi.Controllers
 		private readonly IPublishedContentQuery _publishedContentQuery;
 		private readonly IFakeDataService _fakeDataService;
 
-		public EntitiesController(IContentService contentTypeService, IPublishedContentQuery publishedContentQuery, IFakeDataService fakeDataService)
+        public EntitiesController(IContentService contentTypeService,
+			IPublishedContentQuery publishedContentQuery,
+			IFakeDataService fakeDataService)
 		{
 			_contentService = contentTypeService;
 			_publishedContentQuery = publishedContentQuery;
 			_fakeDataService = fakeDataService;
-		}
+        }
 
 		[HttpPost("fake/{quantity}")]
 		public IActionResult CreateFakeData(int quantity)
@@ -91,7 +96,7 @@ namespace CarsApi.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost]
+        [HttpPost]
 		public IActionResult CreateEntity(CarModel model)
 		{
 			var parentId = Guid.Parse("4533f42c-b5ef-4451-8084-ac130b209b1e");

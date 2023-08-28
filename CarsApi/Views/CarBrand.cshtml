@@ -27,7 +27,7 @@
                     <p class="card-text">@Umbraco.GetDictionaryValue("Origin country"): @originCountry</p>
                     <p class="card-text">@Umbraco.GetDictionaryValue("Foundation date"): @foundationDate</p>
                     <a href="@Umbraco.ContentSingleAtXPath("//brands")!.Url()" class="btn btn-primary">@Umbraco.GetDictionaryValue("Go back")</a>
-                    <a href="/sar-showroom?brand=@Model.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
+                    <a href="@Model.Ancestor()!.Url()?brand=@Model.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
                 </div>
             </div>
         </div>

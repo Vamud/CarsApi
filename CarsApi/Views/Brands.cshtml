@@ -3,23 +3,30 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BrandsViewModel>
 @{
 	Layout = "Master.cshtml";
+    var carsNode = Umbraco.ContentSingleAtXPath("//cars")!;
 }
 
 <div class="container">
-    <div class="row">
+    <div class="row p-2">
         <div class="col">
             <div class="row g-4">
                 @foreach (var brand in Model.Brands)
                 {
-                    <div class="col">
-                        <div class="card">
+                    <div class="col-sm-6 col-md-6 col-lg-3 p-3 d-flex">
+                        <div class="card align-items-center">
                             <img src=@Url.GetCropUrl(brand.Icon, height:400, width:400) class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@brand.Name</h5>
                                 <p class="card-text">@Umbraco.GetDictionaryValue("Origin country"): @brand.OriginCountry</p>
                                 <p class="card-text">@brand.FoundationDate.ToShortDateString()</p>
-                                <a href="@brand.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
-                                <a href="/sar-showroom?brand=@brand.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
+                                <div class="row">
+                                    <div class="col p-2 d-flex">
+                                        <a href="@brand.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("View details")</a>
+                                    </div>
+                                    <div class="col p-2 d-flex">
+                                        <a href="@carsNode.Url()?brand=@brand.Id" class="btn btn-primary">@Umbraco.GetDictionaryValue("View models")</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

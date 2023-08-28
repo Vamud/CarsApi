@@ -16,11 +16,19 @@
                     <li class="breadcrumb-item active" aria-current="page">
                         @if (item.IsDocumentType("home"))
                         {
-                            <a href="@Model.Ancestor().Url()" itemprop="url">
+                            <a href="@Model.Ancestor()!.Url()" itemprop="url">
                                 <span itemprop="title">@itemName</span>
                             </a>
                         }
                         else if (item.IsDocumentType("cars"))
+                        {
+                            var linkTo = item.Url();
+
+                            <a href="@linkTo" itemprop="url">
+                                <span itemprop="title">@itemName</span>
+                            </a>
+                        }
+                        else if (item.IsDocumentType("carModel"))
                         {
                             var linkTo = item.Url();
 
@@ -44,105 +52,12 @@
                                 <span itemprop="title">@itemName</span>
                             </a>
                         }
-                        else if (item.IsDocumentType("carModel"))
-                        {
-                            var linkTo = item.Url();
-
-                            <a href="@linkTo" itemprop="url">
-                                <span itemprop="title">@itemName</span>
-                            </a>
-                        }
                     </li>
                 }
                 <li class="breadcrumb-item active disabled" aria-current="true">
-                    <a href="@Model.Url()" itemprop="url">
-                        <span itemprop="title">@Model.Value("titlePage", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
-                    </a>
+                    <span itemprop="title">@Model.Value("titlePage", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
                 </li>
-                @*@if (Model.IsDocumentType("carModel"))
-                {
-                    <li class="breadcrumb-item active disabled" aria-current="true">
-                        <a href="@Model.Url()" itemprop="url">
-                            <span itemprop="title">@Model.Value("titlePage", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
-                        </a>
-                    </li>
-                }*@
             </ol>
         </nav>
-
-        @*<nav class="breadcrumb-wrap d-none d-lg-block w-100" aria-label="@Umbraco.GetDictionaryValue("Accessability.Breadcrumb")" id="breadcrumb">
-            <div class="holder">
-                <ul class="breadcrumb mb-0 d-lg-flex" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                    @foreach (var item in items)
-                    {
-                        var itemName = item.Value("title", fallback: Fallback.ToDefaultValue, defaultValue: item.Name);
-
-                        <li class="breadcrumb-item">
-                            @if (item.IsDocumentType("categoryPage"))
-                            {
-                                <span itemprop="title">@itemName</span>
-                            }
-                            else if (item.IsDocumentType("subCategoryPage"))
-                            {
-                                var firstTopic = item?.FirstChildOfType("topic");
-                                var firstArticle = firstTopic != null ? firstTopic.FirstChildOfType("article") : item.FirstChildOfType("article");
-                                var linkTo = firstArticle != null ? firstArticle.Url() : item.Url();
-
-                                <a href="@linkTo" itemprop="url">
-                                    <span itemprop="title">@itemName</span>
-                                </a>
-                            }
-                            else if (item.IsDocumentType("topic"))
-                            {
-                                var article = item.FirstChildOfType("article");
-                                var url = article != null ? article.Url() : item.Url();
-
-                                <a href="@url" itemprop="url">
-                                    <span itemprop="title">@itemName</span>
-                                </a>
-                            }
-                            else if (item.IsDocumentType("menuGroup"))
-                            {
-                                <span itemprop="title">@itemName</span>
-                            }
-                            else
-                            {
-                                <a href="@item.Url()" itemprop="url">
-                                    <span itemprop="title">@itemName</span>
-                                </a>
-                            }
-                        </li>
-                    }
-
-                    @if (Model.IsDocumentType("search"))
-                    {
-                        <li class="breadcrumb-item active disabled" aria-current="true">
-                            <a href="@Model.Url()" itemprop="url">
-                                <span itemprop="title">@Model.Value("title", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
-                            </a>
-                        </li>
-                    }
-                    else if (Model.IsDocumentType("article") && !Model.Parent.IsDocumentType("topic") && !string.IsNullOrWhiteSpace(Model.Value<string>("title")))
-                    {
-                        <li class="breadcrumb-item">
-                            <span itemprop="title">@Model.Name</span>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="true">
-                            <a href="@Model.Url()" itemprop="url">
-                                <span itemprop="title">@Model.Value("title")</span>
-                            </a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="breadcrumb-item active" aria-current="true">
-                            <a href="@Model.Url()" itemprop="url">
-                                <span itemprop="title">@Model.Value("title", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name)</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </nav>*@
     }
 }

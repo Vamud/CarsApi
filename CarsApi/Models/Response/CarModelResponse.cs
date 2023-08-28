@@ -1,14 +1,13 @@
 ﻿using Umbraco.Cms.Core.Models.PublishedContent;
 
-namespace CarsApi.Models
+namespace CarsApi.Models.Response
 {
-	public class CarModel
-	{
-        public Guid Id { get; set; }
+    public class CarModelResponse
+    {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public int BrandId { get; set; }
-        public IPublishedContent? Image { get; set; }
-        public string ImageUrl { get; set; } = null!;
+        public string Image { get; set; } = null!;
         public string Url { get; set; } = null!;
         public DateTime LaunchDate { get; set; }
         public string Description { get; set; } = null!;

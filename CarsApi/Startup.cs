@@ -20,10 +20,18 @@ namespace CarsApi
 		{
 			services.AddControllers();
 
-			services.AddTransient<IFakeDataService, FakeDataService>();
-			services.AddTransient<IFilterService, FilterSevice>();
+            services.AddCors(options =>
+            {
 
-			services.AddUmbraco(_env, _config)
+                options.AddPolicy("AllowDashboardOrigin",
+                             builder => builder.SetIsOriginAllowed((host) => true).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            });
+
+            services.AddTransient<IFakeDataService, FakeDataService>();
+			services.AddTransient<IFilterService, FilterService>();
+
+            services.AddUmbraco(_env, _config)
 				.AddBackOffice()
 				.AddWebsite()
 				.AddDeliveryApi()
@@ -38,7 +46,9 @@ namespace CarsApi
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UseUmbraco()
+            app.UseCors("AllowDashboardOrigin");
+
+            app.UseUmbraco()
 				.WithMiddleware(u =>
 				{
 					u.UseBackOffice();

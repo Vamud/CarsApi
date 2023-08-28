@@ -8,21 +8,21 @@
     var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
     var languages = settings!.Value<IEnumerable<string>>("languages");
     var otherLanguages = root.Cultures.Where(x => x.Key.ToString().ToLower() != currentCulture.ToLower());
-    var currentUrl = /*currentPage.Url(currentCulture).Equals("#") ? root.Url(currentCulture) :*/ currentPage.Url(currentCulture);
-}
+    var currentUrl = currentPage.Url(currentCulture);
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        @Umbraco.GetDictionaryValue("Language")
-    </button>
-    <ul class="dropdown-menu">
-        @foreach (var language in otherLanguages)
-        {
-            var url = currentPage.Url(language.Key).Equals("#")
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @Umbraco.GetDictionaryValue("Language")
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var language in otherLanguages)
+            {
+                var url = currentPage.Url(language.Key).Equals("#")
                 ? root.Url(language.Key, mode: UrlMode.Relative)
                 : currentPage.Url(language.Key, mode: UrlMode.Relative);
 
-            <li><a class="dropdown-item" href="@url">@root.Value("language", language.Key)</a></li>
-        }
-    </ul>
-</div>
+                <li><a class="dropdown-item" href="@url">@root.Value("language", language.Key)</a></li>
+            }
+        </ul>
+    </div>
+}
